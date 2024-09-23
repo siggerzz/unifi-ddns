@@ -115,15 +115,9 @@ async function handleRequest(request) {
 
 	// duckdns uses ?token=
 	const token = password || params?.get("token");
-
-	// dyndns uses ?hostname= and ?myip=
-	// duckdns uses ?domains= and ?ip=
-	// ydns uses ?host=
-	const hostnameParam = params?.get("hostname") || params?.get("host") || params?.get("domains");
-	const hostnames = hostnameParam?.split(",");
-
+	
 	// fallback to connecting IP address
-	const ipsParam = params.get("ips") || params.get("ip") || params.get("myip") || request.headers.get("Cf-Connecting-Ip");
+	const ipsParam = request.headers.get("Cf-Connecting-Ip");
    	const ips = ipsParam?.split(",");
 
 	if (!hostnames || hostnames.length === 0 || !ips || ips.length === 0) {
